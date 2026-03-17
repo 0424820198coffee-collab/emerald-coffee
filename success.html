@@ -9,6 +9,7 @@
         body { font-family: sans-serif; background-color: var(--soft-beige); text-align: center; padding: 50px 20px; color: var(--primary-brown); }
         .card { max-width: 500px; margin: auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .check-icon { font-size: 60px; color: #27ae60; margin-bottom: 20px; }
+        .order-id { font-size: 1.1em; color: var(--accent-gold); font-weight: bold; margin-bottom: 10px; }
         .bank-info { background: #FDFBF8; padding: 20px; border: 2px dashed var(--accent-gold); margin: 25px 0; border-radius: 12px; text-align: left; }
         .notice { background: #FFF3E0; padding: 20px; border-radius: 8px; color: #E65100; font-weight: bold; line-height: 1.8; font-size: 1.05em; margin-bottom: 25px; border: 1px solid #FFE0B2; }
         .total-display { color: #B22222; font-size: 1.5em; font-weight: bold; }
@@ -19,6 +20,10 @@
     <div class="card">
         <div class="check-icon">✔</div>
         <h2>訂單已成功送出！</h2>
+        
+        <!-- 新增訂單編號顯示 -->
+        <div id="displayID" class="order-id">正在取得編號...</div>
+        
         <p>請參考下方資訊完成匯款：</p>
         
         <div class="bank-info">
@@ -29,7 +34,8 @@
 
         <div class="notice">
             🔔 溫馨提醒：<br>
-            匯款完成後，請務必將「匯款畫面截圖」<br>
+            1. 系統已同步寄送訂單確認信至您的 Email。<br>
+            2. 匯款完成後，請務必將「匯款畫面截圖」<br>
             傳送至 LINE 客服進行對帳，感謝您的配合！
         </div>
 
@@ -39,9 +45,20 @@
     </div>
 
     <script>
+        // 取得網址參數
         const urlParams = new URLSearchParams(window.location.search);
         const totalAmount = urlParams.get('total');
+        const orderID = urlParams.get('orderID');
+
+        // 顯示總金額
         document.getElementById('displayTotal').innerText = totalAmount ? `NT$ ${totalAmount}` : "請依網頁金額匯款";
+        
+        // 顯示訂單編號
+        if (orderID) {
+            document.getElementById('displayID').innerText = "訂單編號：" + orderID;
+        } else {
+            document.getElementById('displayID').style.display = 'none';
+        }
     </script>
 </body>
 </html>
