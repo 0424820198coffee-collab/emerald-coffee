@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>訂單完成 - 歐客佬翡翠精品莊園</title>
+    <style>
+        :root { --primary-brown: #5D4037; --soft-beige: #F9F7F2; --accent-gold: #C2A378; }
+        body { font-family: sans-serif; background-color: var(--soft-beige); text-align: center; padding: 50px 20px; color: var(--primary-brown); }
+        .card { max-width: 500px; margin: auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .check-icon { font-size: 60px; color: #27ae60; margin-bottom: 20px; }
+        .bank-info { background: #FDFBF8; padding: 20px; border: 2px dashed var(--accent-gold); margin: 25px 0; border-radius: 12px; text-align: left; }
+        .notice { background: #FFF3E0; padding: 15px; border-radius: 8px; color: #E65100; font-weight: bold; line-height: 1.6; font-size: 0.9em; }
+        .total-display { color: #B22222; font-size: 1.5em; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="check-icon">✔</div>
+        <h2>訂單已成功送出！</h2>
+        <p>請參考下方資訊完成匯款：</p>
+        
+        <div class="bank-info">
+            <strong>【銀行】</strong> 第一銀行 (007) 中港分行<br>
+            <strong>【帳號】</strong> 404-68-113097<br>
+            <strong>【應付總額】</strong> <span id="displayTotal" class="total-display">計算中...</span>
+        </div>
+
+        <div class="notice">
+            🔔 系統已記錄您的「後五碼」。<br>
+            店端將主動核對款項並安排出貨，<br>
+            您無需再另外私訊或回報，感謝您的配合！
+        </div>
+        <p><a href="index.html" style="color: var(--accent-gold); text-decoration: none; border-bottom: 1px solid;">← 回到首頁繼續逛逛</a></p>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const totalAmount = urlParams.get('total');
+        document.getElementById('displayTotal').innerText = totalAmount ? `NT$ ${totalAmount}` : "請依網頁金額匯款";
+    </script>
+</body>
+</html>
