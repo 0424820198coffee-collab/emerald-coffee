@@ -264,10 +264,11 @@
         const btn = document.getElementById('sendBtn');
         btn.disabled = true; btn.innerText = "傳送中...";
 
-        // 生成編號：OKL + 年月日 + 隨機數
+        // 修改這裡：讓數量顯示更清晰
         const orderID = "OKL" + new Date().toISOString().slice(2,10).replace(/-/g,'') + Math.floor(Math.random()*1000);
-        const details = cart.map(i => `${i.name}(${i.qty})`).join(', ');
-        const url = "https://script.google.com/macros/s/AKfycbwGa4d2HYSAngbMJRuh_OPXz8GAZZqMsukslPfGbgsotRYxtHC2ywEUF1QTEDwOShRW5g/exec";
+        const details = cart.map(i => `${i.name} x ${i.qty}`).join(', '); // <-- 數量顯示優化
+        
+        const url = "您的 GAS 網址";
 
         try {
             await fetch(url, { 
@@ -277,7 +278,7 @@
             });
             window.location.href = `success.html?total=${total}&orderID=${orderID}`;
         } catch (e) {
-            alert("送出失敗，請檢查網路連接");
+            alert("送出失敗");
             btn.disabled = false; btn.innerText = "送出訂單";
         }
     }
