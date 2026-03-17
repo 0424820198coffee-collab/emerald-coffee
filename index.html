@@ -21,6 +21,7 @@
         button { cursor: pointer; border-radius: 5px; border: none; font-weight: bold; width: 100%; }
         .btn-add { background: var(--primary-brown); color: white; padding: 12px; margin-top: 10px; }
         .btn-send { background: #27ae60; color: white; padding: 15px; font-size: 1.1em; }
+        label { font-weight: bold; font-size: 0.9em; }
         .promo-tag { color: #d32f2f; font-size: 0.85em; font-weight: bold; display: block; margin-bottom: 5px; }
     </style>
 </head>
@@ -28,10 +29,10 @@
 
 <div class="container">
     <div class="header">
-        <h2>歐客佬翡翠咖啡 - 旗艦訂購系統</h2>
+        <h2>歐客佬翡翠咖啡</h2>
         <div style="background: #FFF3E0; padding: 10px; border-radius: 8px; margin-bottom: 20px;">
             <span class="promo-tag">☕ 咖啡豆：買 2 送 1 (贈送最低價品項)</span>
-            <span class="promo-tag">📦 掛耳包：精選系列 50包 5折 | 農場系列 200包 $2300</span>
+            <span class="promo-tag">📦 掛耳包：精品系列 50包 5折 | 農場系列 200包 $2300</span>
             <span class="promo-tag">🥜 米香花生：買 10 送 1 </span>
             <span class="promo-tag">🚚 滿 $2000 免運 (未滿收 $150)</span>
         </div>
@@ -61,11 +62,17 @@
         </div>
         <div style="background: #FDFBF8; padding: 20px; border-radius: 10px; border: 1px solid #EEE;">
             <h3>🚚 配送與對帳資訊</h3>
-            <input type="text" id="uName" placeholder="收件人姓名">
-            <input type="tel" id="uPhone" placeholder="電話">
-            <input type="text" id="uAddress" placeholder="配送地址">
-            <input type="text" id="uBank" placeholder="匯款帳號後五碼">
-            <button class="btn-send" id="sendBtn" onclick="submitToExcel()">送出訂單</button>
+            <label>收件人姓名</label>
+            <input type="text" id="uName" placeholder="請輸入姓名">
+            <label>電話</label>
+            <input type="tel" id="uPhone" placeholder="請輸入電話">
+            <label>電子信箱 (接收訂單通知)</label>
+            <input type="email" id="uEmail" placeholder="請輸入 Email">
+            <label>配送地址</label>
+            <input type="text" id="uAddress" placeholder="請輸入完整地址">
+            <label>匯款帳號後五碼</label>
+            <input type="text" id="uBank" placeholder="請輸入後五碼">
+            <button class="btn-send" id="sendBtn" onclick="submitToExcel()">送出訂單並寄送通知信</button>
         </div>
     </div>
 </div>
@@ -81,14 +88,14 @@
             { name: '【探索品味】精品掛耳禮盒(10包)', price: 249, img: 'images/C818D388-95F2-4608-B333-F162515F0370.jpg' }
         ],
         '咖啡豆': [
-            { name: '衣索比亞 耶加雪菲 ToH冠軍處理廠系列 卡拉 阿吉娜 日曬 G1 黃金烘焙(1900系列)', price: 1900, img: 'images/1900x (11).webp' },
-            { name: '哥斯大黎加 科佩莊園 藝伎 黑蜜處理 白金烘焙(1900系列)', price: 1900, img: 'images/1900x (12).webp' },
-            { name: '藝伎交響曲 第二樂章 黃金烘(1100系列)', price: 1100, img: 'images/1100x (6).webp' },
-            { name: '哥斯大黎加 卡內特 音樂家系列 巴哈 黃金烘焙(1100系列)', price: 1100, img: 'images/1100x (7).webp' },
-            { name: '哥斯大黎加 卡內特 音樂家系列 蕭邦 黃金烘焙(1100系列)', price: 1100, img: 'images/1100x (8).webp' },
-            { name: '哥斯大黎加 卡內特 音樂家系列 莫札特 黃金烘焙(1100系列)', price: 1100, img: 'images/1100x (9).webp' },
-            { name: '衣索比亞 古吉 烏拉嘎 水洗 G1 黃金烘焙(1100系列)', price: 1100, img: 'images/1100x (10).webp' },
-            { name: '2019 WCE 世界盃烘豆大賽 冠軍 烘焙配方 白金烘焙(800系列)', price: 800, img: 'images/800x.webp' },
+            { name: '衣索比亞 耶加雪菲 ToH冠軍系列 卡拉 阿吉娜 日曬 G1 (1900系列)', price: 1900, img: 'images/1900x (11).webp' },
+            { name: '哥斯大黎加 科佩莊園 藝伎 黑蜜處理 (1900系列)', price: 1900, img: 'images/1900x (12).webp' },
+            { name: '藝伎交響曲 第二樂章 (1100系列)', price: 1100, img: 'images/1100x (6).webp' },
+            { name: '音樂家系列 巴哈 (1100系列)', price: 1100, img: 'images/1100x (7).webp' },
+            { name: '音樂家系列 蕭邦 (1100系列)', price: 1100, img: 'images/1100x (8).webp' },
+            { name: '音樂家系列 莫札特 (1100系列)', price: 1100, img: 'images/1100x (9).webp' },
+            { name: '古吉 烏拉嘎 水洗 G1 (1100系列)', price: 1100, img: 'images/1100x (10).webp' },
+            { name: '2019 WCE 世界盃烘豆大賽 冠軍配方 (800系列)', price: 800, img: 'images/800x.webp' },
             { name: '藝伎交響曲 第一樂章 (800系列)', price: 800, img: 'images/800x (1).webp' },
             { name: '牧羊人 日曬 (800系列)', price: 800, img: 'images/800x (2).webp' },
             { name: '牧羊人 水洗 (800系列)', price: 800, img: 'images/800x (3).webp' },
@@ -190,21 +197,19 @@
         const disp = document.getElementById('cartDisplay');
         if (cart.length === 0) { disp.innerHTML = "目前無商品"; document.getElementById('totalPrice').innerText = "0"; return; }
 
-        let farmQty = 0;           // 農場系列數量
-        let premiumCoffeeQty = 0;  // 精品掛耳數量
-        let premiumCoffeeAmt = 0;  // 精品掛耳原價總額
+        let farmQty = 0;           
+        let premiumCoffeeQty = 0;  
+        let premiumCoffeeAmt = 0;  
         let peanutQty = 0;
-        let regularAmt = 0;        // 禮盒與花生原價總額
-        let beanPrices = [];       // 咖啡豆單價清單
+        let regularAmt = 0;        
+        let beanPrices = [];       
 
         cart.forEach(item => {
             if (item.cat === '咖啡豆') {
                 for(let i=0; i<item.qty; i++) beanPrices.push(item.price);
             } else if (item.price === 12.5) {
-                // 獨立統計：農場系列
                 farmQty += item.qty;
-            } else if (item.cat === '精品掛耳') {
-                // 獨立統計：精品系列
+            } else if (item.cat === '掛耳咖啡' && item.price !== 12.5) {
                 premiumCoffeeQty += item.qty;
                 premiumCoffeeAmt += (item.price * item.qty);
             } else {
@@ -213,7 +218,6 @@
             }
         });
 
-        // 1. 咖啡豆邏輯：買2送1 (扣除最低價)
         beanPrices.sort((a, b) => a - b);
         let beanTotal = 0;
         let beanDiscountCount = Math.floor(beanPrices.length / 3);
@@ -222,16 +226,10 @@
         beanPrices.forEach(p => beanTotal += p);
         let beanFinal = beanTotal - beanDiscountAmt;
 
-        // 2. 精品掛耳邏輯：獨立滿 50 包 5 折
         let premiumFinal = (premiumCoffeeQty >= 50) ? (premiumCoffeeAmt * 0.5) : premiumCoffeeAmt;
-
-        // 3. 農場系列邏輯：獨立滿 200 包 $2300
         let farmFinal = (farmQty >= 200) ? (2300 + (farmQty - 200) * 11.5) : (farmQty * 12.5);
-        
-        // 4. 花生邏輯：買10送1
         let peanutDiscount = Math.floor(peanutQty / 11) * 150;
         
-        // 總計相加
         let subtotal = beanFinal + premiumFinal + farmFinal + regularAmt - peanutDiscount;
         let shipping = (subtotal >= 2000) ? 0 : 150;
 
@@ -242,9 +240,9 @@
             </div>`).join('');
 
         let promoMsg = "";
-        if (beanDiscountAmt > 0) promoMsg += `<br><small style="color:green;">✅ 咖啡豆已扣除最低價 $${beanDiscountAmt}</small>`;
-        if (premiumCoffeeQty >= 50) promoMsg += `<br><small style="color:green;">✅ 精品掛耳已享 5 折 (共 ${premiumCoffeeQty} 包)</small>`;
-        if (farmQty >= 200) promoMsg += `<br><small style="color:green;">✅ 農場系列已享 $2300 優惠 (共 ${farmQty} 包)</small>`;
+        if (beanDiscountAmt > 0) promoMsg += `<br><small style="color:green;">✅ 咖啡豆已享買2送1</small>`;
+        if (premiumCoffeeQty >= 50) promoMsg += `<br><small style="color:green;">✅ 精品掛耳已享 5 折</small>`;
+        if (farmQty >= 200) promoMsg += `<br><small style="color:green;">✅ 農場系列已享 $2300 優惠</small>`;
         if (peanutDiscount > 0) promoMsg += `<br><small style="color:green;">✅ 花生已享買10送1</small>`;
 
         disp.innerHTML += `<div style="margin-top:10px; border-top:1px solid #eee; font-size:0.9em;">
@@ -254,25 +252,32 @@
     }
 
     async function submitToExcel() {
-        const name = document.getElementById('uName').value;
-        const phone = document.getElementById('uPhone').value;
-        const addr = document.getElementById('uAddress').value;
-        const bank = document.getElementById('uBank').value;
+        const name = document.getElementById('uName').value.trim();
+        const phone = document.getElementById('uPhone').value.trim();
+        const email = document.getElementById('uEmail').value.trim();
+        const addr = document.getElementById('uAddress').value.trim();
+        const bank = document.getElementById('uBank').value.trim();
         const total = document.getElementById('totalPrice').innerText;
 
-        if (!name || !phone || !addr || !bank || cart.length === 0) return alert("請填寫完整配送資訊");
+        if (!name || !phone || !email || !addr || !bank || cart.length === 0) return alert("請完整填寫收件資訊與 Email");
 
         const btn = document.getElementById('sendBtn');
         btn.disabled = true; btn.innerText = "傳送中...";
 
+        // 生成編號：OKL + 年月日 + 隨機數
+        const orderID = "OKL" + new Date().toISOString().slice(2,10).replace(/-/g,'') + Math.floor(Math.random()*1000);
         const details = cart.map(i => `${i.name}(${i.qty})`).join(', ');
-        const url = "https://script.google.com/macros/s/AKfycbyeVLp9xJnA4c64AzaGgFINeoML6-zs5BsoSkrau4vkt10wUWA8XLYjqmnoKQcHt8ZDAQ/exec";
+        const url = "https://script.google.com/macros/s/AKfycbwGa4d2HYSAngbMJRuh_OPXz8GAZZqMsukslPfGbgsotRYxtHC2ywEUF1QTEDwOShRW5g/exec";
 
         try {
-            await fetch(url, { method: "POST", mode: "no-cors", body: JSON.stringify({ name, phone, address: addr, bank, productName: details, totalPrice: total }) });
-            window.location.href = `success.html?total=${total}`;
+            await fetch(url, { 
+                method: "POST", 
+                mode: "no-cors", 
+                body: JSON.stringify({ orderID, name, phone, email, address: addr, bank, productName: details, totalPrice: total }) 
+            });
+            window.location.href = `success.html?total=${total}&orderID=${orderID}`;
         } catch (e) {
-            alert("送出失敗");
+            alert("送出失敗，請檢查網路連接");
             btn.disabled = false; btn.innerText = "送出訂單";
         }
     }
