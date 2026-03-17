@@ -6,12 +6,17 @@
     <title>訂單完成 - 歐客佬翡翠咖啡</title>
     <style>
         :root { --primary-brown: #5D4037; --soft-beige: #F9F7F2; --accent-gold: #C2A378; }
-        body { font-family: sans-serif; background-color: var(--soft-beige); text-align: center; padding: 50px 20px; color: var(--primary-brown); }
-        .card { max-width: 500px; margin: auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .check-icon { font-size: 60px; color: #27ae60; margin-bottom: 20px; }
-        .order-id { font-size: 1.1em; color: var(--accent-gold); font-weight: bold; margin-bottom: 10px; }
-        .bank-info { background: #FDFBF8; padding: 20px; border: 2px dashed var(--accent-gold); margin: 25px 0; border-radius: 12px; text-align: left; }
-        .notice { background: #FFF3E0; padding: 20px; border-radius: 8px; color: #E65100; font-weight: bold; line-height: 1.8; font-size: 1.05em; margin-bottom: 25px; border: 1px solid #FFE0B2; }
+        body { font-family: sans-serif; background-color: var(--soft-beige); text-align: center; padding: 30px 20px; color: var(--primary-brown); }
+        .card { max-width: 550px; margin: auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .check-icon { font-size: 50px; color: #27ae60; margin-bottom: 10px; }
+        .order-id { font-size: 1.1em; color: var(--accent-gold); font-weight: bold; margin-bottom: 15px; }
+        
+        /* 訂單明細樣式 */
+        .order-details { background: #FDFBF8; border: 1px solid #EEE; border-radius: 10px; padding: 15px; text-align: left; margin-bottom: 20px; font-size: 0.95em; }
+        .details-title { font-weight: bold; border-bottom: 1px solid #EEE; padding-bottom: 5px; margin-bottom: 10px; color: var(--primary-brown); }
+        
+        .bank-info { background: #FFFDE7; padding: 20px; border: 2px dashed var(--accent-gold); margin-bottom: 25px; border-radius: 12px; text-align: left; }
+        .notice { background: #FFF3E0; padding: 15px; border-radius: 8px; color: #E65100; font-weight: bold; line-height: 1.8; font-size: 1em; margin-bottom: 25px; border: 1px solid #FFE0B2; }
         .total-display { color: #B22222; font-size: 1.5em; font-weight: bold; }
         .home-link { color: var(--accent-gold); text-decoration: none; border-bottom: 1px solid; font-weight: bold; }
     </style>
@@ -21,12 +26,16 @@
         <div class="check-icon">✔</div>
         <h2>訂單已成功送出！</h2>
         
-        <!-- 新增訂單編號顯示 -->
         <div id="displayID" class="order-id">正在取得編號...</div>
-        
-        <p>請參考下方資訊完成匯款：</p>
+
+        <!-- 訂單明細顯示區 -->
+        <div class="order-details">
+            <div class="details-title">📋 訂單明細</div>
+            <div id="displayItems">讀取中...</div>
+        </div>
         
         <div class="bank-info">
+            <p style="margin: 0 0 10px 0; font-weight: bold; color: #555;">請完成匯款：</p>
             <strong>【銀行】</strong> 第一銀行 (007) 中港分行<br>
             <strong>【帳號】</strong> 404-68-113097<br>
             <strong>【應付總額】</strong> <span id="displayTotal" class="total-display">計算中...</span>
@@ -34,30 +43,36 @@
 
         <div class="notice">
             🔔 溫馨提醒：<br>
-            1. 系統已同步寄送訂單確認信至您的 Email。<br>
-            2. 匯款完成後，請務必將「匯款畫面截圖」<br>
-            傳送至 LINE 客服進行對帳，感謝您的配合！
+            1. 確認信已寄至您的 Email (請檢查垃圾信箱)。<br>
+            2. 匯款後請務必「截圖畫面」傳送至 LINE 客服進行對帳。
         </div>
 
-        <p style="margin-top: 30px;">
+        <p style="margin-top: 20px;">
             <a href="index.html" class="home-link">← 回到首頁繼續逛逛</a>
         </p>
     </div>
 
     <script>
-        // 取得網址參數
         const urlParams = new URLSearchParams(window.location.search);
         const totalAmount = urlParams.get('total');
         const orderID = urlParams.get('orderID');
+        const items = urlParams.get('items');
 
         // 顯示總金額
-        document.getElementById('displayTotal').innerText = totalAmount ? `NT$ ${totalAmount}` : "請依網頁金額匯款";
+        document.getElementById('displayTotal').innerText = totalAmount ? `NT$ ${totalAmount}` : "請依金額匯款";
         
         // 顯示訂單編號
         if (orderID) {
             document.getElementById('displayID').innerText = "訂單編號：" + orderID;
+        }
+
+        // 顯示品項明細
+        if (items) {
+            // 將傳過來的逗點分隔字串轉為條列式
+            const itemList = items.split(', ');
+            document.getElementById('displayItems').innerHTML = itemList.map(i => `<div>· ${i}</div>`).join('');
         } else {
-            document.getElementById('displayID').style.display = 'none';
+            document.getElementById('displayItems').innerText = "無品項資訊";
         }
     </script>
 </body>
