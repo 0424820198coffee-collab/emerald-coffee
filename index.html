@@ -4,26 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>歐客佬翡翠咖啡 - 旗艦訂購系統</title>
-    <style>
-        :root { --primary-brown: #5D4037; --soft-beige: #F9F7F2; --accent-gold: #C2A378; }
-        body { font-family: sans-serif; background-color: var(--soft-beige); padding: 20px; color: var(--primary-brown); line-height: 1.6; }
-        .container { max-width: 1000px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .header { text-align: center; margin-bottom: 20px; }
-        .tab-container { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
-        .tab { padding: 8px 15px; cursor: pointer; border: 1px solid var(--accent-gold); border-radius: 50px; color: var(--accent-gold); font-weight: bold; font-size: 0.9em; }
-        .tab.active { background: var(--accent-gold); color: white; }
-        .product-hero { text-align: center; margin-bottom: 20px; border: 1px solid #EEE; padding: 10px; border-radius: 10px; background: #fff; min-height: 350px; display: flex; align-items: center; justify-content: center; }
-        .product-img { max-width: 100%; max-height: 400px; object-fit: contain; border-radius: 5px; }
-        .cart-section { display: grid; grid-template-columns: 1fr 350px; gap: 20px; margin-top: 30px; border-top: 2px solid #F0E6D6; padding-top: 20px; }
-        @media (max-width: 768px) { .cart-section { grid-template-columns: 1fr; } }
-        .cart-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #EEE; font-size: 0.9em; }
-        input, select { width: 100%; padding: 12px; margin: 5px 0 15px 0; border: 1px solid #DDD; border-radius: 5px; box-sizing: border-box; font-size: 16px; }
-        button { cursor: pointer; border-radius: 5px; border: none; font-weight: bold; width: 100%; }
-        .btn-add { background: var(--primary-brown); color: white; padding: 12px; margin-top: 10px; }
-        .btn-send { background: #27ae60; color: white; padding: 15px; font-size: 1.1em; }
-        label { font-weight: bold; font-size: 0.9em; }
-        .promo-tag { color: #d32f2f; font-size: 0.85em; font-weight: bold; display: block; margin-bottom: 5px; }
-    </style>
+    <!-- 引入外部 CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -31,7 +13,7 @@
     <div class="header">
         <h2>歐客佬翡翠咖啡</h2>
         <div style="background: #FFF3E0; padding: 10px; border-radius: 8px; margin-bottom: 20px;">
-            <span class="promo-tag">☕ 咖啡豆：買 2 送 1 (贈送最低價品項)</span>
+            <span class="promo-tag">☕ 咖啡豆 / 農場豆：買 2 送 1 (贈送最低價品項)</span>
             <span class="promo-tag">📦 精品掛耳：滿 50 包享 5 折優惠</span>
             <span class="promo-tag">📦 農場系列：滿 200 包享優惠價 $2300</span>
             <span class="promo-tag">🥜 米香花生：買 10 送 1 </span>
@@ -39,12 +21,15 @@
         </div>
     </div>
 
+    <!-- 標籤切換區 -->
     <div class="tab-container" id="tabs"></div>
 
+    <!-- 商品大圖展示 -->
     <div class="product-hero">
         <img id="mainImg" src="" class="product-img">
     </div>
 
+    <!-- 選擇與加入購物車 -->
     <div style="background: #FFF; padding: 20px; border: 1px solid #F0E6D6; border-radius: 10px;">
         <label>選擇品項口味</label>
         <select id="prodSel" onchange="updateUI()"></select>
@@ -53,6 +38,7 @@
         <button class="btn-add" onclick="addToCart()">加入購物車</button>
     </div>
 
+    <!-- 購物清單與結帳資訊 -->
     <div class="cart-section">
         <div>
             <h3>🛒 購物清單</h3>
@@ -78,222 +64,7 @@
     </div>
 </div>
 
-<script>
-    const products = {
-        '咖啡禮盒': [
-            { name: '【大藝術家Vol. lll】精品掛耳禮盒(27包)', price: 999, img: 'images/86F4F0FD-B895-4153-ADE3-B8755077B1DD.jpg' },
-            { name: '【圓滿】精品掛耳禮盒(24包)', price: 639, img: 'images/F3AAA3C7-216D-4574-B544-9A68C83384FC.jpg' },
-            { name: '【職人首選】精品掛耳禮盒(20包)', price: 599, img: 'images/8644247A-802D-4778-B45F-C0D283B6D937.jpg' },
-            { name: '【精選】精品掛耳禮盒(22包)', price: 499, img: 'images/CFF3DA3D-6351-4818-AC7F-46FE6105FBCD.jpg' },
-            { name: '【咖啡寶盒】精品掛耳禮盒(15包)', price: 379, img: 'images/64E7269E-5A9A-4896-9457-C87B560C32BD.jpg' },
-            { name: '【探索品味】精品掛耳禮盒(10包)', price: 249, img: 'images/C818D388-95F2-4608-B333-F162515F0370.jpg' }
-        ],
-        '咖啡豆': [
-            { name: '衣索比亞 耶加雪菲 ToH冠軍系列 卡拉 阿吉娜 日曬 G1 (1900系列)', price: 1900, img: 'images/1900x (11).webp' },
-            { name: '哥斯大黎加 科佩莊園 藝伎 黑蜜處理 (1900系列)', price: 1900, img: 'images/1900x (12).webp' },
-            { name: '藝伎交響曲 第二樂章 (1100系列)', price: 1100, img: 'images/1100x (6).webp' },
-            { name: '音樂家系列 巴哈 (1100系列)', price: 1100, img: 'images/1100x (7).webp' },
-            { name: '音樂家系列 蕭邦 (1100系列)', price: 1100, img: 'images/1100x (8).webp' },
-            { name: '音樂家系列 莫札特 (1100系列)', price: 1100, img: 'images/1100x (9).webp' },
-            { name: '古吉 烏拉嘎 水洗 G1 (1100系列)', price: 1100, img: 'images/1100x (10).webp' },
-            { name: '2019 WCE 世界盃烘豆大賽 冠軍配方 (800系列)', price: 800, img: 'images/800x.webp' },
-            { name: '藝伎交響曲 第一樂章 (800系列)', price: 800, img: 'images/800x (1).webp' },
-            { name: '牧羊人 日曬 (800系列)', price: 800, img: 'images/800x (2).webp' },
-            { name: '牧羊人 水洗 (800系列)', price: 800, img: 'images/800x (3).webp' },
-            { name: '獅子王 日曬 (800系列)', price: 800, img: 'images/800x (4).webp' },
-            { name: '獅子王 水洗 (800系列)', price: 800, img: 'images/800x (5).webp' },
-            { name: '尼加拉瓜 水洗 SHG (500系列)', price: 500, img: 'images/500x.webp' },
-            { name: '蜂鳥 黃金烘焙 (500系列)', price: 500, img: 'images/500x (1).webp' },
-            { name: '瑪雅 中烘焙 (500系列)', price: 500, img: 'images/500x (2).webp' },
-            { name: '征服者 日式烘焙 (500系列)', price: 500, img: 'images/500x(3).webp' },
-            { name: '瑪雅 中深烘焙 (500系列)', price: 500, img: 'images/500x(4).webp' },
-            { name: '蜂鳥 黑金烘焙 (500系列)', price: 500, img: 'images/500x(6).webp' },
-            { name: '藍鑽 黃金曼特寧 (400系列)', price: 400, img: 'images/D6326D5E-1880-4007-BE82-47EFBD02B8DB.jpg' },
-            { name: '耶加雪菲 (400系列)', price: 400, img: 'images/6CA69FE3-8839-496F-90AA-E14DBA371F8C.jpg' },
-            { name: '印尼 綠寶石 (400系列)', price: 400, img: 'images/0BCF97E7-7E40-4133-A9B9-2263E9187419.jpg' },
-            { name: '安提瓜 花神 (400系列)', price: 400, img: 'images/1AEE6DC4-76FA-4B72-8F9E-91B02363DB13.jpg' }
-        ],
-        '精品掛耳': [
-            { name: '卡拉 阿吉娜 日曬 (黃金)', price: 100, img: 'images/S__463814658.jpg' },
-            { name: '綠標 藝伎 水洗 (黃金)', price: 100, img: 'images/S__463814660.jpg' },
-            { name: '音樂家 蕭邦 (黃金)', price: 70, img: 'images/S__463814662.jpg' },
-            { name: '音樂家 莫札特 (黃金)', price: 70, img: 'images/S__463814664.jpg' },
-            { name: '音樂家 巴哈 (黃金)', price: 70, img: 'images/S__463814666.jpg' },
-            { name: '古吉 烏拉嘎 水洗 (黃金)', price: 70, img: 'images/S__463814668.jpg' },
-            { name: '藝伎交響曲 第二樂章 (黃金)', price: 70, img: 'images/S__463814672.jpg' },
-            { name: '神父咖啡 日式 (掛耳)', price: 60, img: 'images/S__463814674.jpg' },
-            { name: '神父咖啡 中深 (掛耳)', price: 60, img: 'images/S__463814676.jpg' },
-            { name: '牧羊人 水洗 (黃金)', price: 60, img: 'images/S__463814678.jpg' },
-            { name: '牧羊人 日曬 (黃金)', price: 60, img: 'images/S__463814680.jpg' },
-            { name: '獅子王 日曬 (黃金)', price: 60, img: 'images/S__463814682.jpg' },
-            { name: '獅子王 水洗 (黃金)', price: 60, img: 'images/S__463814684.jpg' },
-            { name: '藝伎交響曲 第四樂章 (黃金)', price: 60, img: 'images/S__463814686.jpg' },
-            { name: '藝伎交響曲 第一樂章 (白金)', price: 60, img: 'images/S__463814688.jpg' },
-            { name: '冠軍烘焙配方 (白金)', price: 60, img: 'images/S__463814690.jpg' },
-            { name: '波奎特 花蝴蝶 (白金)', price: 60, img: 'images/S__463814692.jpg' },
-            { name: '托利馬 小農精選 (中深)', price: 40, img: 'images/S__463814694.jpg' },
-            { name: '征服者 中深烘焙', price: 40, img: 'images/S__463814696.jpg' },
-            { name: '征服者 日式烘焙', price: 40, img: 'images/S__463814698.jpg' },
-            { name: '尼加拉瓜 水洗 SHG (白金)', price: 40, img: 'images/S__463814700.jpg' },
-            { name: '瑪雅 中烘焙 (掛耳)', price: 40, img: 'images/S__463814702.jpg' },
-            { name: '蜂鳥 黃金烘焙 (掛耳)', price: 40, img: 'images/S__463814704.jpg' },
-            { name: '歐客佬 藝伎風味 (黃金)', price: 40, img: 'images/S__463814706.jpg' },
-            { name: '艾拉班莎處理廠 日曬 (中深)', price: 35, img: 'images/S__463814708.jpg' },
-            { name: '藍鑽 黃金曼特寧 (中深)', price: 35, img: 'images/S__463814710.jpg' },
-            { name: '安提瓜 花神 (中烘焙)', price: 35, img: 'images/S__463814712.jpg' },
-            { name: '耶加雪菲 黃金烘焙 (掛耳)', price: 35, img: 'images/S__463814714.jpg' },
-            { name: '耶加雪菲 日式烘焙 (掛耳)', price: 35, img: 'images/S__463814716.jpg' }
-        ],
-        '農場濾掛': [
-            { name: '經典曼巴 (農場濾掛)', price: 12.5, img: 'images/S__463806467_0.jpg' },
-            { name: '陳年阿拉比卡 (農場濾掛)', price: 12.5, img: 'images/S__463806468_0.jpg' },
-            { name: '藍山風味 (農場濾掛)', price: 12.5, img: 'images/S__463806469_0.jpg' },
-            { name: '黃金曼特寧風味 (農場濾掛)', price: 12.5, img: 'images/S__463806470_0.jpg' },
-            { name: '黃金曼摩風味 (農場濾掛)', price: 12.5, img: 'images/S__463806471_0.jpg' }
-        ],
-        '米香花生': [
-            { name: '米香花生 (麻辣酥)', price: 150, img: 'images/S__464224264.jpg' },
-            { name: '米香花生 (白米酥)', price: 150, img: 'images/S__464224264.jpg' },
-            { name: '米香花生 (黑米酥)', price: 150, img: 'images/S__464224264.jpg' },
-            { name: '米香花生 (紅麥酥)', price: 150, img: 'images/S__464224264.jpg' }
-        ]
-    };
-
-    let cart = [];
-
-    function initTabs() {
-        const container = document.getElementById('tabs');
-        container.innerHTML = "";
-        Object.keys(products).forEach((cat, idx) => {
-            const div = document.createElement('div');
-            div.className = `tab ${idx === 0 ? 'active' : ''}`;
-            div.innerText = cat;
-            div.onclick = () => switchCategory(cat);
-            container.appendChild(div);
-        });
-        switchCategory(Object.keys(products)[0]);
-    }
-
-    function switchCategory(cat) {
-        document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.innerText === cat));
-        const sel = document.getElementById('prodSel');
-        sel.innerHTML = products[cat].map(p => `<option value="${p.name}" data-price="${p.price}" data-img="${p.img}" data-cat="${cat}">${p.name} - $${p.price}</option>`).join('');
-        updateUI();
-    }
-
-    function updateUI() {
-        const sel = document.getElementById('prodSel');
-        if (sel.options[sel.selectedIndex]) {
-            document.getElementById('mainImg').src = sel.options[sel.selectedIndex].dataset.img;
-        }
-    }
-
-    function addToCart() {
-        const sel = document.getElementById('prodSel');
-        const qty = parseInt(document.getElementById('prodQty').value);
-        if (qty < 1) return;
-        const opt = sel.options[sel.selectedIndex];
-        const exist = cart.find(i => i.name === sel.value);
-        if (exist) { exist.qty += qty; } 
-        else { cart.push({ name: sel.value, price: parseFloat(opt.dataset.price), qty: qty, cat: opt.dataset.cat }); }
-        renderCart();
-    }
-
-    function renderCart() {
-        const disp = document.getElementById('cartDisplay');
-        if (cart.length === 0) { disp.innerHTML = "目前無商品"; document.getElementById('totalPrice').innerText = "0"; return; }
-
-        let farmQty = 0;           
-        let premiumCoffeeQty = 0;  
-        let premiumCoffeeAmt = 0;  
-        let peanutQty = 0;
-        let regularAmt = 0;        
-        let beanPrices = [];       
-
-        cart.forEach(item => {
-            if (item.cat === '咖啡豆') {
-                for(let i=0; i<item.qty; i++) beanPrices.push(item.price);
-            } else if (item.cat === '農場濾掛') {
-                farmQty += item.qty;
-            } else if (item.cat === '精品掛耳') {
-                premiumCoffeeQty += item.qty;
-                premiumCoffeeAmt += (item.price * item.qty);
-            } else {
-                if (item.cat === '米香花生') peanutQty += item.qty;
-                regularAmt += (item.price * item.qty);
-            }
-        });
-
-        // 咖啡豆買2送1
-        beanPrices.sort((a, b) => a - b);
-        let beanTotal = 0;
-        let beanDiscountCount = Math.floor(beanPrices.length / 3);
-        let beanDiscountAmt = 0;
-        for(let i=0; i<beanDiscountCount; i++) beanDiscountAmt += beanPrices[i];
-        beanPrices.forEach(p => beanTotal += p);
-        let beanFinal = beanTotal - beanDiscountAmt;
-
-        // 精品掛耳 50包 5折
-        let premiumFinal = (premiumCoffeeQty >= 50) ? (premiumCoffeeAmt * 0.5) : premiumCoffeeAmt;
-        
-        // 農場系列 200包 2300元
-        let farmFinal = (farmQty >= 200) ? (2300 + (farmQty - 200) * 11.5) : (farmQty * 12.5);
-        
-        // 花生買10送1
-        let peanutDiscount = Math.floor(peanutQty / 11) * 150;
-        
-        let subtotal = beanFinal + premiumFinal + farmFinal + regularAmt - peanutDiscount;
-        let shipping = (subtotal >= 2000) ? 0 : 150;
-
-        disp.innerHTML = cart.map((item, idx) => `
-            <div class="cart-item">
-                <span>${item.name} x ${item.qty}</span>
-                <span>$${Math.round(item.price * item.qty)} <button onclick="cart.splice(${idx},1);renderCart()" style="color:red; border:none; background:none; cursor:pointer;">(刪除)</button></span>
-            </div>`).join('');
-
-        let promoMsg = "";
-        if (beanDiscountAmt > 0) promoMsg += `<br><small style="color:green;">✅ 咖啡豆已享買2送1</small>`;
-        if (premiumCoffeeQty >= 50) promoMsg += `<br><small style="color:green;">✅ 精品掛耳已享 5 折</small>`;
-        if (farmQty >= 200) promoMsg += `<br><small style="color:green;">✅ 農場系列已享 $2300 優惠</small>`;
-        if (peanutDiscount > 0) promoMsg += `<br><small style="color:green;">✅ 花生已享買10送1</small>`;
-
-        disp.innerHTML += `<div style="margin-top:10px; border-top:1px solid #eee; font-size:0.9em;">
-            小計: $${Math.round(subtotal)} ${promoMsg}<br>
-            運費: $${shipping}</div>`;
-        document.getElementById('totalPrice').innerText = Math.round(subtotal + shipping);
-    }
-
-    async function submitToExcel() {
-        const name = document.getElementById('uName').value.trim();
-        const phone = document.getElementById('uPhone').value.trim();
-        const email = document.getElementById('uEmail').value.trim();
-        const addr = document.getElementById('uAddress').value.trim();
-        const bank = document.getElementById('uBank').value.trim();
-        const total = document.getElementById('totalPrice').innerText;
-
-        if (!name || !phone || !email || !addr || !bank || cart.length === 0) return alert("請完整填寫收件資訊與 Email");
-
-        const btn = document.getElementById('sendBtn');
-        btn.disabled = true; btn.innerText = "傳送中...";
-
-        const orderID = "OKL" + new Date().toISOString().slice(2,10).replace(/-/g,'') + Math.floor(Math.random()*1000);
-        const details = cart.map(i => `${i.name}(${i.qty})`).join(', ');
-        const url = "https://script.google.com/macros/s/AKfycbwGa4d2HYSAngbMJRuh_OPXz8GAZZqMsukslPfGbgsotRYxtHC2ywEUF1QTEDwOShRW5g/exec";
-
-        try {
-            await fetch(url, { 
-                method: "POST", 
-                mode: "no-cors", 
-                body: JSON.stringify({ orderID, name, phone, email, address: addr, bank, productName: details, totalPrice: total }) 
-            });
-            window.location.href = `success.html?total=${total}&orderID=${orderID}&items=${encodeURIComponent(details)}`;
-        } catch (e) {
-            alert("送出失敗，請檢查網路連接");
-            btn.disabled = false; btn.innerText = "送出訂單";
-        }
-    }
-
-    initTabs();
-</script>
+<!-- 引入外部 JavaScript -->
+<script src="script.js"></script>
 </body>
 </html>
