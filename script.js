@@ -7,7 +7,7 @@ const products = {
         { name: '【咖啡寶盒】精品掛耳禮盒(15包)', price: 379, img: 'images/64E7269E-5A9A-4896-9457-C87B560C32BD.jpg' },
         { name: '【探索品味】精品掛耳禮盒(10包)', price: 249, img: 'images/C818D388-95F2-4608-B333-F162515F0370.jpg' }
     ],
-    '咖啡豆': [
+    '精品咖啡豆': [
         { name: '衣索比亞 耶加雪菲 ToH冠軍系列 卡拉 阿吉娜 日曬 G1 (1900系列)', price: 1900, img: 'images/1900x (11).webp' },
         { name: '哥斯大黎加 科佩莊園 藝伎 黑蜜處理 (1900系列)', price: 1900, img: 'images/1900x (12).webp' },
         { name: '藝伎交響曲 第二樂章 (1100系列)', price: 1100, img: 'images/1100x (6).webp' },
