@@ -32,7 +32,8 @@
         <h2>歐客佬翡翠咖啡</h2>
         <div style="background: #FFF3E0; padding: 10px; border-radius: 8px; margin-bottom: 20px;">
             <span class="promo-tag">☕ 咖啡豆：買 2 送 1 (贈送最低價品項)</span>
-            <span class="promo-tag">📦 掛耳包：精品系列 50包 5折 | 農場系列 200包 $2300</span>
+            <span class="promo-tag">📦 精品掛耳：滿 50 包享 5 折優惠</span>
+            <span class="promo-tag">📦 農場系列：滿 200 包享優惠價 $2300</span>
             <span class="promo-tag">🥜 米香花生：買 10 送 1 </span>
             <span class="promo-tag">🚚 滿 $2000 免運 (未滿收 $150)</span>
         </div>
@@ -112,7 +113,7 @@
             { name: '印尼 綠寶石 (400系列)', price: 400, img: 'images/0BCF97E7-7E40-4133-A9B9-2263E9187419.jpg' },
             { name: '安提瓜 花神 (400系列)', price: 400, img: 'images/1AEE6DC4-76FA-4B72-8F9E-91B02363DB13.jpg' }
         ],
-        '掛耳咖啡': [
+        '精品掛耳': [
             { name: '卡拉 阿吉娜 日曬 (黃金)', price: 100, img: 'images/S__463814658.jpg' },
             { name: '綠標 藝伎 水洗 (黃金)', price: 100, img: 'images/S__463814660.jpg' },
             { name: '音樂家 蕭邦 (黃金)', price: 70, img: 'images/S__463814662.jpg' },
@@ -141,7 +142,9 @@
             { name: '藍鑽 黃金曼特寧 (中深)', price: 35, img: 'images/S__463814710.jpg' },
             { name: '安提瓜 花神 (中烘焙)', price: 35, img: 'images/S__463814712.jpg' },
             { name: '耶加雪菲 黃金烘焙 (掛耳)', price: 35, img: 'images/S__463814714.jpg' },
-            { name: '耶加雪菲 日式烘焙 (掛耳)', price: 35, img: 'images/S__463814716.jpg' },
+            { name: '耶加雪菲 日式烘焙 (掛耳)', price: 35, img: 'images/S__463814716.jpg' }
+        ],
+        '農場濾掛': [
             { name: '經典曼巴 (農場濾掛)', price: 12.5, img: 'images/S__463806467_0.jpg' },
             { name: '陳年阿拉比卡 (農場濾掛)', price: 12.5, img: 'images/S__463806468_0.jpg' },
             { name: '藍山風味 (農場濾掛)', price: 12.5, img: 'images/S__463806469_0.jpg' },
@@ -160,6 +163,7 @@
 
     function initTabs() {
         const container = document.getElementById('tabs');
+        container.innerHTML = "";
         Object.keys(products).forEach((cat, idx) => {
             const div = document.createElement('div');
             div.className = `tab ${idx === 0 ? 'active' : ''}`;
@@ -179,7 +183,9 @@
 
     function updateUI() {
         const sel = document.getElementById('prodSel');
-        document.getElementById('mainImg').src = sel.options[sel.selectedIndex].dataset.img;
+        if (sel.options[sel.selectedIndex]) {
+            document.getElementById('mainImg').src = sel.options[sel.selectedIndex].dataset.img;
+        }
     }
 
     function addToCart() {
@@ -207,9 +213,9 @@
         cart.forEach(item => {
             if (item.cat === '咖啡豆') {
                 for(let i=0; i<item.qty; i++) beanPrices.push(item.price);
-            } else if (item.price === 12.5) {
+            } else if (item.cat === '農場濾掛') {
                 farmQty += item.qty;
-            } else if (item.cat === '掛耳咖啡' && item.price !== 12.5) {
+            } else if (item.cat === '精品掛耳') {
                 premiumCoffeeQty += item.qty;
                 premiumCoffeeAmt += (item.price * item.qty);
             } else {
@@ -218,6 +224,7 @@
             }
         });
 
+        // 咖啡豆買2送1
         beanPrices.sort((a, b) => a - b);
         let beanTotal = 0;
         let beanDiscountCount = Math.floor(beanPrices.length / 3);
@@ -226,8 +233,13 @@
         beanPrices.forEach(p => beanTotal += p);
         let beanFinal = beanTotal - beanDiscountAmt;
 
+        // 精品掛耳 50包 5折
         let premiumFinal = (premiumCoffeeQty >= 50) ? (premiumCoffeeAmt * 0.5) : premiumCoffeeAmt;
+        
+        // 農場系列 200包 2300元
         let farmFinal = (farmQty >= 200) ? (2300 + (farmQty - 200) * 11.5) : (farmQty * 12.5);
+        
+        // 花生買10送1
         let peanutDiscount = Math.floor(peanutQty / 11) * 150;
         
         let subtotal = beanFinal + premiumFinal + farmFinal + regularAmt - peanutDiscount;
@@ -264,7 +276,6 @@
         const btn = document.getElementById('sendBtn');
         btn.disabled = true; btn.innerText = "傳送中...";
 
-        // 生成編號：OKL + 年月日 + 隨機數
         const orderID = "OKL" + new Date().toISOString().slice(2,10).replace(/-/g,'') + Math.floor(Math.random()*1000);
         const details = cart.map(i => `${i.name}(${i.qty})`).join(', ');
         const url = "https://script.google.com/macros/s/AKfycbwGa4d2HYSAngbMJRuh_OPXz8GAZZqMsukslPfGbgsotRYxtHC2ywEUF1QTEDwOShRW5g/exec";
@@ -275,7 +286,7 @@
                 mode: "no-cors", 
                 body: JSON.stringify({ orderID, name, phone, email, address: addr, bank, productName: details, totalPrice: total }) 
             });
-                window.location.href = `success.html?total=${total}&orderID=${orderID}&items=${encodeURIComponent(details)}`;
+            window.location.href = `success.html?total=${total}&orderID=${orderID}&items=${encodeURIComponent(details)}`;
         } catch (e) {
             alert("送出失敗，請檢查網路連接");
             btn.disabled = false; btn.innerText = "送出訂單";
